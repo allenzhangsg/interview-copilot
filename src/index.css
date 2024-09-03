@@ -1,7 +1,17 @@
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
-    Arial, sans-serif;
-  margin: auto;
-  max-width: 38rem;
-  padding: 2rem;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.titlebar {
+  background-color: #f0f0f0;
+  margin: -8px -8px;
+  padding: 4px 8px;
+  border-bottom: 1px solid #d0d0d0;
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+}
+
+.titlebar-button {
+  -webkit-app-region: no-drag;
 }
