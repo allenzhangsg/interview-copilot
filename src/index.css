@@ -5,7 +5,9 @@ body {
 
 .titlebar {
   background-color: #f0f0f0;
-  margin: -8px -8px;
+  margin-top: -8px;
+  margin-left: -8px;
+  margin-right: -8px;
   padding: 4px 8px;
   border-bottom: 1px solid #d0d0d0;
   -webkit-user-select: none;
