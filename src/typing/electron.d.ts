@@ -9,7 +9,7 @@ declare global {
       restoreWindow: () => void;
       on: (channel: string, data: () => void) => void;
       send: (channel: string, data: () => void) => void;
-      removeAllListeners: (channel: string) => void;
+      removeListener: (channel: string, data: () => void) => void;
     };
   }
 }

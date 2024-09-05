@@ -10,6 +10,6 @@ contextBridge.exposeInMainWorld("electron", {
     restoreWindow: () => ipcRenderer.send("restore-window"),
     send: (channel: string, data: () => void) => ipcRenderer.send(channel, data),
     on: (channel: string, data: () => void) => ipcRenderer.on(channel, data),
-    removeAllListeners: (channel: string) => ipcRenderer.removeAllListeners(channel),
+    removeListener: (channel: string, data: () => void) => ipcRenderer.removeListener(channel, data),
   }
 );

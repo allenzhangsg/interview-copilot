@@ -11,6 +11,7 @@ body {
   padding: 4px 8px;
   border-bottom: 1px solid #d0d0d0;
   -webkit-user-select: none;
+  user-select: none;
   -webkit-app-region: drag;
 }
 
