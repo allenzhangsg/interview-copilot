@@ -61,6 +61,7 @@ const TitleBar = () => {
           radius={"none"}
           color="gray"
           onClick={window.electron.minimizeWindow}
+          style={{ width: '25px' }}
         >
           {icons.minimize}
         </Button>
@@ -68,6 +69,7 @@ const TitleBar = () => {
           variant="ghost"
           radius={"none"}
           color="gray"
+          style={{ width: '25px' }}
           onClick={
             isMaximized
               ? window.electron.restoreWindow
@@ -81,6 +83,7 @@ const TitleBar = () => {
           radius={"none"}
           color="gray"
           onClick={window.electron.closeWindow}
+          style={{ width: '25px' }}
         >
           {icons.close}
         </Button>
