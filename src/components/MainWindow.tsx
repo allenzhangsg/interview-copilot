@@ -33,7 +33,7 @@ const MainWindow = () => {
         style={{
           width: "100%",
           height: button.height,
-          backgroundColor: selectedTab === button.label ? "var(--accent-a4)" : undefined,
+          backgroundColor: selectedTab === button.label ? "var(--accent-6)" : undefined,
         }}
         onClick={() => setSelectedTab(button.label)}
       >
@@ -51,7 +51,7 @@ const MainWindow = () => {
         justify="between"
         align="center"
         height="100vh"
-        style={{ backgroundColor: "#f0f0f0" }}
+        style={{ backgroundColor: "var(--accent-4)" }}
       >
         {/* Sidebar content goes here */}
         <Box>
@@ -75,7 +75,7 @@ const MainWindow = () => {
           <Box style={{ height: "50%" }}>{currentTime}</Box>
         </Flex>
       </Flex>
-      <Flex direction="column" pl="20px" pt="20px" style={{ flex: 1 }}>
+      <Flex direction="column" pl="20px" mr="-8px" pt="20px" style={{ flex: 1 ,backgroundColor: "var(--accent-2)"}}>
         {/* Main content goes here */}
         {selectedTab === "Profile" && <ProfilePage />}
         {selectedTab === "Settings" && <SettingsPage />}

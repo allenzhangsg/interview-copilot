@@ -9,7 +9,7 @@ const container = document.getElementById("root");
 
 const root = createRoot(container);
 root.render(
-  <Theme accentColor="ruby" grayColor="sand" radius="large" scaling="100%">
+  <Theme accentColor="iris" grayColor="sand" radius="large" scaling="100%">
     <TitleBar />
     <MainWindow />
   </Theme>

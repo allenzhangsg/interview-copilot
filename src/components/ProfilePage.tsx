@@ -18,7 +18,7 @@ const ProfilePage = () => {
           <TextArea placeholder="Enter glossary terms" id="glossary" />
         </Box>
         <Flex justify="end">
-          <Button size="2">Save Profile</Button>
+          <Button size="2" variant="soft">Save Profile</Button>
         </Flex>
       </Flex>
     </Box>
