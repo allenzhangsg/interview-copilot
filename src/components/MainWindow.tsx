@@ -70,7 +70,7 @@ const MainWindow = () => {
           height="100px"
           justify="center"
           align="center"
-          style={{ borderTop: "1px solid #d0d0d0" }}
+          style={{ borderTop: "1px solid var(--accent-7)" }}
         >
           <Box style={{ height: "50%" }}>{currentTime}</Box>
         </Flex>
