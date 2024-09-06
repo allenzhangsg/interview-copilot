@@ -1,10 +1,14 @@
 import React from "react";
-import { Select } from "@radix-ui/themes";
+import { Box, Select, Text, Flex } from "@radix-ui/themes";
 
 const SettingsPage = () => {
   return (
-    <div className="settings-page">
-      <h1>Settings</h1>
+    <Box p="4" style={{ width: "600px" }}>
+      <Flex justify="start">
+        <Text size="5" weight="bold" mb="5">
+          Settings
+        </Text>
+      </Flex>
 
       <SettingItem
         label="Display"
@@ -23,7 +27,7 @@ const SettingsPage = () => {
         label="Audio Input"
         options={["Default", "Microphone 1", "Microphone 2"]}
       />
-    </div>
+    </Box>
   );
 };
 
@@ -34,8 +38,18 @@ const SettingItem = ({
   label: string;
   options: string[];
 }) => (
-  <div className="setting-item">
-    <label>{label}</label>
+  <Flex
+    direction="row"
+    justify="between"
+    align="center"
+    mb="3"
+    gap="2"
+    p="1"
+    style={{ borderBottom: "1px dashed var(--accent-7)" }}
+  >
+    <Text as="label" size="3" htmlFor={label}>
+      {label}
+    </Text>
     <Select.Root defaultValue={options[0]}>
       <Select.Trigger />
       <Select.Content>
@@ -46,7 +60,7 @@ const SettingItem = ({
         ))}
       </Select.Content>
     </Select.Root>
-  </div>
+  </Flex>
 );
 
 export default SettingsPage;

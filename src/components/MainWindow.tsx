@@ -75,7 +75,7 @@ const MainWindow = () => {
           <Box style={{ height: "50%" }}>{currentTime}</Box>
         </Flex>
       </Flex>
-      <Flex direction="column" pl="20px" mr="-8px" pt="20px" style={{ flex: 1 ,backgroundColor: "var(--accent-2)"}}>
+      <Flex direction="row" justify="center" p="20px" mr="-8px" style={{ flex: 1 ,backgroundColor: "var(--accent-2)"}}>
         {/* Main content goes here */}
         {selectedTab === "Profile" && <ProfilePage />}
         {selectedTab === "Settings" && <SettingsPage />}

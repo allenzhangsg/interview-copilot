@@ -84,6 +84,7 @@ const TitleBar = () => {
           color="gray"
           onClick={window.electron.closeWindow}
           style={{ width: '25px' }}
+          className="hover-red"
         >
           {icons.close}
         </Button>

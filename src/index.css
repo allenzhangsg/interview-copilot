@@ -19,23 +19,6 @@ body {
   -webkit-app-region: no-drag;
 }
 
-.settings-page {
-  padding: 24px;
-}
-
-.settings-page h1 {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 24px;
-}
-
-.setting-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 24px;
-}
-
-.setting-item label {
-  font-weight: 500;
+.hover-red:hover {
+  background-color: red;
 }
