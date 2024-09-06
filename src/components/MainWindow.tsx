@@ -1,9 +1,12 @@
 import { Flex, Button, Box } from "@radix-ui/themes";
 import { PlayIcon } from "@radix-ui/react-icons";
 import { useState, useEffect } from "react"; // Add this import
+import CareerPage from "./CareerPage";
+import ProfilePage from "./ProfilePage";
+import SettingsPage from "./SettingsPage";
 
 const MainWindow = () => {
-  const [selectedTab, setSelectedTab] = useState("button2");
+  const [selectedTab, setSelectedTab] = useState("Profile");
   const [currentTime, setCurrentTime] = useState(
     new Date().toLocaleTimeString()
   ); // Add state for current time
@@ -16,9 +19,9 @@ const MainWindow = () => {
   }, []);
 
   const buttonData = [
-    { label: "button2", height: "50px" },
-    { label: "button3", height: "50px" },
-    { label: "button4", height: "50px" },
+    { label: "Profile", height: "50px" },
+    { label: "Settings", height: "50px" },
+    { label: "Careers", height: "50px" },
   ];
 
   const renderButtons = () => {
@@ -27,7 +30,11 @@ const MainWindow = () => {
         key={button.label}
         variant="soft"
         radius="none"
-        style={{ width: "100%", height: button.height }}
+        style={{
+          width: "100%",
+          height: button.height,
+          backgroundColor: selectedTab === button.label ? "var(--accent-a4)" : undefined,
+        }}
         onClick={() => setSelectedTab(button.label)}
       >
         {button.label}
@@ -70,9 +77,9 @@ const MainWindow = () => {
       </Flex>
       <Flex direction="column" pl="20px" pt="20px" style={{ flex: 1 }}>
         {/* Main content goes here */}
-        {selectedTab === "button2" && <p>page1</p>}
-        {selectedTab === "button3" && <p>page2</p>}
-        {selectedTab === "button4" && <p>page3</p>}
+        {selectedTab === "Profile" && <ProfilePage />}
+        {selectedTab === "Settings" && <SettingsPage />}
+        {selectedTab === "Careers" && <CareerPage />}
       </Flex>
     </Flex>
   );
