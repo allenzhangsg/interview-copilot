@@ -18,14 +18,14 @@ const MainWindow = () => {
     return () => clearInterval(interval); // Cleanup on unmount
   }, []);
 
-  const buttonData = [
+  const interviewButtons = [
     { label: "Profile", height: "50px" },
-    { label: "Settings", height: "50px" },
     { label: "Careers", height: "50px" },
   ];
+  const settingsButtons = [{ label: "Settings", height: "50px" }];
 
-  const renderButtons = () => {
-    return buttonData.map((button) => (
+  const renderButtons = (buttons: { label: string; height: string }[]) => {
+    return buttons.map((button) => (
       <Button
         key={button.label}
         variant="soft"
@@ -33,7 +33,8 @@ const MainWindow = () => {
         style={{
           width: "100%",
           height: button.height,
-          backgroundColor: selectedTab === button.label ? "var(--accent-6)" : undefined,
+          backgroundColor:
+            selectedTab === button.label ? "var(--accent-6)" : undefined,
         }}
         onClick={() => setSelectedTab(button.label)}
       >
@@ -62,20 +63,27 @@ const MainWindow = () => {
           >
             <PlayIcon width="60%" height="60%" />
           </Button>
-          {renderButtons()} {/* Render buttons here */}
+          {renderButtons(interviewButtons)} {/* Render buttons here */}
         </Box>
         <Flex
           direction="column"
           width="100%"
-          height="100px"
-          justify="center"
+          height="120px"
+          justify="between"
           align="center"
           style={{ borderTop: "1px solid var(--accent-7)" }}
         >
+          {renderButtons(settingsButtons)}
           <Box style={{ height: "50%" }}>{currentTime}</Box>
         </Flex>
       </Flex>
-      <Flex direction="row" justify="center" p="20px" mr="-8px" style={{ flex: 1 ,backgroundColor: "var(--accent-2)"}}>
+      <Flex
+        direction="row"
+        justify="center"
+        p="20px"
+        mr="-8px"
+        style={{ flex: 1, backgroundColor: "var(--accent-2)" }}
+      >
         {/* Main content goes here */}
         {selectedTab === "Profile" && <ProfilePage />}
         {selectedTab === "Settings" && <SettingsPage />}

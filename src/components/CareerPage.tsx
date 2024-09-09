@@ -11,14 +11,14 @@ const CareerPage = () => {
       <Flex direction="column" gap="4">
         <Box>
           <Text as="label" size="3" mb="2" htmlFor="company">
-            Company
+            🏢 Company Name
           </Text>
           <TextField.Root placeholder="Enter company name" id="company">
           </TextField.Root>
         </Box>
         <Box>
           <Text as="label" size="3" mb="2" htmlFor="jobDescription">
-            Job Description
+            📋 Job Description
           </Text>
           <TextArea
             placeholder="Enter job description"

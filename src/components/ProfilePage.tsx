@@ -10,14 +10,18 @@ const ProfilePage = () => {
       </Flex>
       <Flex direction="column" gap="4">
         <Box>
-          <Text as="label" size="3" mb="2" htmlFor="cv">
-            CV
+          <Text as="label" size="3" mb="2" htmlFor="resume">
+            📄Resume
           </Text>
-          <TextArea placeholder="Enter your CV" resize="vertical" id="cv" />
+          <TextArea
+            placeholder="Enter your resume"
+            resize="vertical"
+            id="resume"
+          />
         </Box>
         <Box>
           <Text as="label" size="3" mb="2" htmlFor="userStory">
-            User Story
+            📝User Story
           </Text>
           <TextArea
             placeholder="Enter your user story"
@@ -27,7 +31,7 @@ const ProfilePage = () => {
         </Box>
         <Box>
           <Text as="label" size="3" mb="2" htmlFor="glossary">
-            Glossary
+            📚Glossary
           </Text>
           <TextArea
             placeholder="Enter glossary terms"
