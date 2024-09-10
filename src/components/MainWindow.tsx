@@ -44,14 +44,14 @@ const MainWindow = () => {
   };
 
   return (
-    <Flex direction="row" height="100vh">
+    <Flex direction="row" height="calc(100vh - 30px)">
       <Flex
         direction="column"
         width="150px"
         ml="-8px"
         justify="between"
         align="center"
-        height="100vh"
+        height="100%"
         style={{ backgroundColor: "var(--accent-4)" }}
       >
         {/* Sidebar content goes here */}
@@ -86,12 +86,19 @@ const MainWindow = () => {
         justify="center"
         p="20px"
         mr="-8px"
-        style={{ flex: 1, backgroundColor: "var(--accent-2)" }}
+        style={{
+          flex: 1,
+          backgroundColor: "var(--accent-2)",
+          overflowY: "auto",
+          overflowX: "hidden",
+        }}
       >
         {/* Main content goes here */}
-        {selectedTab === "Profile" && <ProfilePage />}
-        {selectedTab === "Settings" && <SettingsPage />}
-        {selectedTab === "Careers" && <CareerPage />}
+        <Box>
+          {selectedTab === "Profile" && <ProfilePage />}
+          {selectedTab === "Settings" && <SettingsPage />}
+          {selectedTab === "Careers" && <CareerPage />}
+        </Box>
       </Flex>
     </Flex>
   );

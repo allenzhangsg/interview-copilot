@@ -48,6 +48,7 @@ const TitleBar = () => {
       align={"center"}
       justify={"between"}
       className={"titlebar"}
+      height="30px"
     >
       <TwitterLogoIcon></TwitterLogoIcon>
       <Flex
@@ -61,7 +62,7 @@ const TitleBar = () => {
           radius={"none"}
           color="gray"
           onClick={window.electron.minimizeWindow}
-          style={{ width: '25px' }}
+          style={{ width: '25px', height: '30px' }}
         >
           {icons.minimize}
         </Button>
@@ -69,7 +70,7 @@ const TitleBar = () => {
           variant="ghost"
           radius={"none"}
           color="gray"
-          style={{ width: '25px' }}
+          style={{ width: '25px', height: '30px' }}
           onClick={
             isMaximized
               ? window.electron.restoreWindow
@@ -83,7 +84,7 @@ const TitleBar = () => {
           radius={"none"}
           color="gray"
           onClick={window.electron.closeWindow}
-          style={{ width: '25px' }}
+          style={{ width: '25px', height: '30px' }}
           className="hover-red"
         >
           {icons.close}
