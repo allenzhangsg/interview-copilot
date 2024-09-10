@@ -1,4 +1,4 @@
-import { Flex, Button, Box } from "@radix-ui/themes";
+import { Flex, Button, Box, Text } from "@radix-ui/themes";
 import { PlayIcon } from "@radix-ui/react-icons";
 import { useState, useEffect } from "react"; // Add this import
 import CareerPage from "./CareerPage";
@@ -59,9 +59,13 @@ const MainWindow = () => {
           <Button
             variant="soft"
             radius="none"
-            style={{ width: "100%", height: "100px" }}
+            style={{ width: "100%", height: "80px" }}
+            title="Start a meeting" // Add hover info
           >
-            <PlayIcon width="60%" height="60%" />
+            <PlayIcon color="red" width="30%" height="30%" />
+            <Text color="red" size="4">
+              Start
+            </Text>
           </Button>
           {renderButtons(interviewButtons)} {/* Render buttons here */}
         </Box>
