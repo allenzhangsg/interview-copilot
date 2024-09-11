@@ -1,9 +1,9 @@
-import { Flex, Button, Box, Text } from "@radix-ui/themes";
-import { PlayIcon } from "@radix-ui/react-icons";
-import { useState, useEffect } from "react"; // Add this import
+import { Flex, Button, Box } from "@radix-ui/themes";
+import { useState, useEffect } from "react";
 import CareerPage from "../pages/CareerPage";
 import ProfilePage from "../pages/ProfilePage";
 import SettingsPage from "../pages/SettingsPage";
+import StartButton from "./StartButton";
 
 const MainWindow = () => {
   const [selectedTab, setSelectedTab] = useState("Profile");
@@ -56,17 +56,7 @@ const MainWindow = () => {
       >
         {/* Sidebar content goes here */}
         <Box>
-          <Button
-            variant="soft"
-            radius="none"
-            style={{ width: "100%", height: "80px" }}
-            title="Start a meeting" // Add hover info
-          >
-            <PlayIcon color="red" width="30%" height="30%" />
-            <Text color="red" size="4">
-              Start
-            </Text>
-          </Button>
+          <StartButton />
           {renderButtons(interviewButtons)} {/* Render buttons here */}
         </Box>
         <Flex
