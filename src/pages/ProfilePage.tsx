@@ -1,5 +1,5 @@
 import { Flex, Box, Text, Button } from "@radix-ui/themes";
-import EditableTextArea from "./EditableTextArea";
+import EditableTextArea from "../components/EditableTextArea";
 import { useState } from "react";
 
 const ProfilePage = () => {

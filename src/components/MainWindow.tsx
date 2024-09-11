@@ -1,9 +1,9 @@
 import { Flex, Button, Box, Text } from "@radix-ui/themes";
 import { PlayIcon } from "@radix-ui/react-icons";
 import { useState, useEffect } from "react"; // Add this import
-import CareerPage from "./CareerPage";
-import ProfilePage from "./ProfilePage";
-import SettingsPage from "./SettingsPage";
+import CareerPage from "../pages/CareerPage";
+import ProfilePage from "../pages/ProfilePage";
+import SettingsPage from "../pages/SettingsPage";
 
 const MainWindow = () => {
   const [selectedTab, setSelectedTab] = useState("Profile");
