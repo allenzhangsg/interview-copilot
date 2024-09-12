@@ -1,7 +1,7 @@
 import { Button, Flex, Text } from "@radix-ui/themes";
 import { useNavigate } from "react-router-dom";
 
-const MeetingRoomPage = () => {
+const MeetingRoom = () => {
   const navigate = useNavigate();
 
   const handleFinishMeeting = () => {
@@ -18,4 +18,4 @@ const MeetingRoomPage = () => {
   );
 };
 
-export default MeetingRoomPage;
+export default MeetingRoom;

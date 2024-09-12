@@ -1,11 +1,11 @@
 import { Flex, Button, Box } from "@radix-ui/themes";
 import { useState, useEffect } from "react";
-import CareerPage from "../pages/CareerPage";
-import ProfilePage from "../pages/ProfilePage";
-import SettingsPage from "../pages/SettingsPage";
-import StartButton from "./StartButton";
+import CareerPage from "../components/CareerForm";
+import ProfilePage from "../components/ProfileForm";
+import SettingsPage from "../components/SettingsForm";
+import StartButton from "../components/StartButton";
 
-const MainWindow = () => {
+const Home = () => {
   const [selectedTab, setSelectedTab] = useState("Profile");
   const [currentTime, setCurrentTime] = useState(
     new Date().toLocaleTimeString()
@@ -94,4 +94,4 @@ const MainWindow = () => {
   );
 };
 
-export default MainWindow;
+export default Home;

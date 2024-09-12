@@ -1,5 +1,5 @@
 import { Flex, Box, Text } from "@radix-ui/themes";
-import EditableTextArea from "../components/EditableTextArea";
+import EditableTextArea from "./EditableTextArea";
 import { useState } from "react";
 
 const CareerPage = () => {
