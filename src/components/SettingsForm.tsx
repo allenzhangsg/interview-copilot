@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Select, Text, Flex } from "@radix-ui/themes";
 
-const SettingsPage = () => {
+const SettingsForm = () => {
   return (
     <Box p="4" style={{ width: "600px" }}>
       <Flex justify="start">
@@ -63,4 +63,4 @@ const SettingItem = ({
   </Flex>
 );
 
-export default SettingsPage;
+export default SettingsForm;

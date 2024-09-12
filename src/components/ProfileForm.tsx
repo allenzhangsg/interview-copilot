@@ -2,10 +2,27 @@ import { Flex, Box, Text, Button } from "@radix-ui/themes";
 import EditableTextArea from "./EditableTextArea";
 import { useState } from "react";
 
-const ProfilePage = () => {
-  const [resumeText, setResumeText] = useState("");
-  const [userStoryText, setUserStoryText] = useState("");
-  const [glossaryText, setGlossaryText] = useState("");
+const ProfileForm = () => {
+  const [resumeText, setResumeText] = useState<string>("");
+  const [userStoryText, setUserStoryText] = useState<string>("");
+  const [glossaryText, setGlossaryText] = useState<string>("");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const profile = { resumeText, userStoryText, glossaryText };
+    const id = await window.electron.db.insertProfile(profile);
+    console.log(`Profile inserted with ID: ${id}`);
+  };
+
+  const handleFetch = async () => {
+    const id = 1; // Example ID
+    const profile = await window.electron.db.fetchProfile(id);
+    if (profile) {
+      setResumeText(profile.resumeText);
+      setUserStoryText(profile.userStoryText);
+      setGlossaryText(profile.glossaryText);
+    }
+  };
 
   return (
     <Box p="4" style={{ width: "600px" }}>
@@ -58,4 +75,4 @@ const ProfilePage = () => {
   );
 };
 
-export default ProfilePage;
+export default ProfileForm;

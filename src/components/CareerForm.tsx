@@ -2,7 +2,7 @@ import { Flex, Box, Text } from "@radix-ui/themes";
 import EditableTextArea from "./EditableTextArea";
 import { useState } from "react";
 
-const CareerPage = () => {
+const CareerForm = () => {
   const [companyName, setCompanyName] = useState("");
   const [jobDescription, setJobDescription] = useState("");
 
@@ -41,4 +41,4 @@ const CareerPage = () => {
   );
 };
 
-export default CareerPage;
+export default CareerForm;

@@ -1,8 +1,8 @@
 import { Flex, Button, Box } from "@radix-ui/themes";
 import { useState, useEffect } from "react";
-import CareerPage from "../components/CareerForm";
-import ProfilePage from "../components/ProfileForm";
-import SettingsPage from "../components/SettingsForm";
+import CareerForm from "../components/CareerForm";
+import ProfileForm from "../components/ProfileForm";
+import SettingsForm from "../components/SettingsForm";
 import StartButton from "../components/StartButton";
 
 const Home = () => {
@@ -85,9 +85,9 @@ const Home = () => {
       >
         {/* Main content goes here */}
         <Box>
-          {selectedTab === "Profile" && <ProfilePage />}
-          {selectedTab === "Settings" && <SettingsPage />}
-          {selectedTab === "Careers" && <CareerPage />}
+          {selectedTab === "Profile" && <ProfileForm />}
+          {selectedTab === "Settings" && <SettingsForm />}
+          {selectedTab === "Careers" && <CareerForm />}
         </Box>
       </Flex>
     </Flex>
