@@ -93,3 +93,4 @@ out/
 
 .idea/
 .cursorrules
+db.sqlite
