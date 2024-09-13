@@ -9,18 +9,24 @@ const ProfileForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const profile = { resumeText, userStoryText, glossaryText };
+    const profile = {
+      resume: resumeText,
+      user_story: userStoryText,
+      glossary: glossaryText,
+    };
     const id = await window.electron.db.insertProfile(profile);
     console.log(`Profile inserted with ID: ${id}`);
   };
 
   const handleFetch = async () => {
+    console.log("Fetching profile");
     const id = 1; // Example ID
     const profile = await window.electron.db.fetchProfile(id);
+    console.log("Profile fetched:", profile);
     if (profile) {
-      setResumeText(profile.resumeText);
-      setUserStoryText(profile.userStoryText);
-      setGlossaryText(profile.glossaryText);
+      setResumeText(profile.resume);
+      setUserStoryText(profile.user_story);
+      setGlossaryText(profile.glossary);
     }
   };
 
@@ -65,9 +71,12 @@ const ProfileForm = () => {
             onChange={setGlossaryText}
           />
         </Box>
-        <Flex justify="end">
-          <Button size="2" variant="soft">
+        <Flex justify="end" gap={"2"}>
+          <Button size="2" variant="soft" onClick={handleSubmit}>
             Save Profile
+          </Button>
+          <Button size="2" variant="soft" onClick={handleFetch}>
+            Get Profile
           </Button>
         </Flex>
       </Flex>

@@ -34,11 +34,11 @@ const createWindow = async (): Promise<void> => {
   // Open the DevTools.
   // mainWindow.webContents.openDevTools();
 
-  ipcMain.handle('insert-profile', async (event, profile) => {
+  ipcMain.handle("db:insertProfile", async (event, profile) => {
     return await insertProfile(profile);
   });
 
-  ipcMain.handle('fetch-profile', async (event, id) => {
+  ipcMain.handle("db:fetchProfile", async (event, id) => {
     return await fetchProfile(id);
   });
 

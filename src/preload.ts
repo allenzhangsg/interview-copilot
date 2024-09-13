@@ -13,8 +13,14 @@ contextBridge.exposeInMainWorld("electron", {
   removeListener: (channel: string, data: () => void) =>
     ipcRenderer.removeListener(channel, data),
   db: {
-    insertProfile: (profile: { name: string; email: string; bio: string }) =>
-      ipcRenderer.invoke("db:insertProfile", profile),
-    fetchProfile: (id: number) => ipcRenderer.invoke("db:fetchProfile", id),
+    insertProfile: (profile: {
+      resume: string;
+      user_story: string;
+      glossary: string;
+    }) => ipcRenderer.invoke("db:insertProfile", profile),
+    fetchProfile: (
+      id: number
+    ): Promise<{ resume: string; user_story: string; glossary: string }> =>
+      ipcRenderer.invoke("db:fetchProfile", id),
   },
 });

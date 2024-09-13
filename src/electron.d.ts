@@ -12,14 +12,14 @@ declare global {
       removeListener: (channel: string, data: () => void) => void;
       db: {
         insertProfile: (profile: {
-          resumeText: string;
-          userStoryText: string;
-          glossaryText: string;
+          resume: string;
+          user_story: string;
+          glossary: string;
         }) => Promise<void>;
         fetchProfile: (id: number) => Promise<{
-          resumeText: string;
-          userStoryText: string;
-          glossaryText: string;
+          resume: string;
+          user_story: string;
+          glossary: string;
         }>;
       };
     };
