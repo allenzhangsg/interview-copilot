@@ -18,6 +18,7 @@ const EditableTextArea: React.FC<EditableTextAreaProps> = ({
 
   const handleSave = () => {
     setIsEditing(false);
+    // TODO: save to database
   };
 
   return (

@@ -68,7 +68,10 @@ const Home = () => {
           style={{ borderTop: "1px solid var(--accent-7)" }}
         >
           {renderButtons(settingsButtons)}
-          <Box style={{ height: "50%" }}>{currentTime}</Box>
+          <Box style={{ height: "50%" }}>
+            {/* TODO: turn it to a separate compenent. It's causing re-render of the home page */}
+            {currentTime}
+          </Box>
         </Flex>
       </Flex>
       <Flex

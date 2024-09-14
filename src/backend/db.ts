@@ -21,7 +21,8 @@ export const initDatabase = async (): Promise<Database> => {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       resume TEXT,
       user_story TEXT,
-      glossary TEXT
+      glossary TEXT,
+      last_edited DATETIME DEFAULT CURRENT_TIMESTAMP
     )
   `);
 
@@ -43,7 +44,7 @@ export const insertProfile = async (profile: {
   const db = getDb();
   const { resume, user_story, glossary } = profile;
   const result = await db.run(
-    "INSERT INTO profiles (resume, user_story, glossary) VALUES (?, ?, ?)",
+    "INSERT INTO profiles (resume, user_story, glossary, last_edited) VALUES (?, ?, ?, CURRENT_TIMESTAMP)",
     [resume, user_story, glossary]
   );
   return result.lastID;
@@ -52,4 +53,11 @@ export const insertProfile = async (profile: {
 export const fetchProfile = async (id: number) => {
   const db = getDb();
   return await db.get("SELECT * FROM profiles WHERE id = ?", id);
+};
+export const getLastInsertedProfile = async () => {
+  const db = getDb();
+  const result = await db.get(
+    "SELECT id, resume, user_story, glossary, last_edited FROM profiles ORDER BY id DESC LIMIT 1"
+  );
+  return result;
 };

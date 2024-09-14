@@ -1,11 +1,12 @@
 import { Flex, Box, Text, Button } from "@radix-ui/themes";
 import EditableTextArea from "./EditableTextArea";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const ProfileForm = () => {
   const [resumeText, setResumeText] = useState<string>("");
   const [userStoryText, setUserStoryText] = useState<string>("");
   const [glossaryText, setGlossaryText] = useState<string>("");
+  const [lastEdited, setLastEdited] = useState<string>("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -16,25 +17,33 @@ const ProfileForm = () => {
     };
     const id = await window.electron.db.insertProfile(profile);
     console.log(`Profile inserted with ID: ${id}`);
+    handleFetch(); // Fetch the updated profile to get the new last_edited value
   };
 
   const handleFetch = async () => {
-    console.log("Fetching profile");
-    const id = 1; // Example ID
-    const profile = await window.electron.db.fetchProfile(id);
+    console.log("Fetching last inserted profile");
+    const profile = await window.electron.db.getLastInsertedProfile();
     console.log("Profile fetched:", profile);
     if (profile) {
       setResumeText(profile.resume);
       setUserStoryText(profile.user_story);
       setGlossaryText(profile.glossary);
+      setLastEdited(new Date(profile.last_edited).toLocaleString());
     }
   };
 
+  useEffect(() => {
+    handleFetch();
+  }, []);
+
   return (
     <Box p="4" style={{ width: "600px" }}>
-      <Flex justify="start">
+      <Flex justify="start" direction="row" align="center" gap="4">
         <Text size="5" weight="bold" mb="5">
           Profile Information
+        </Text>
+        <Text size="1" color="gray" mb="5">
+          Last edited: {lastEdited}
         </Text>
       </Flex>
       <Flex direction="column" gap="4">
@@ -74,9 +83,6 @@ const ProfileForm = () => {
         <Flex justify="end" gap={"2"}>
           <Button size="2" variant="soft" onClick={handleSubmit}>
             Save Profile
-          </Button>
-          <Button size="2" variant="soft" onClick={handleFetch}>
-            Get Profile
           </Button>
         </Flex>
       </Flex>

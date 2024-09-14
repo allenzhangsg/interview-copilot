@@ -20,7 +20,17 @@ contextBridge.exposeInMainWorld("electron", {
     }) => ipcRenderer.invoke("db:insertProfile", profile),
     fetchProfile: (
       id: number
-    ): Promise<{ resume: string; user_story: string; glossary: string }> =>
-      ipcRenderer.invoke("db:fetchProfile", id),
+    ): Promise<{
+      resume: string;
+      user_story: string;
+      glossary: string;
+      last_edited: string;
+    }> => ipcRenderer.invoke("db:fetchProfile", id),
+    getLastInsertedProfile: (): Promise<{
+      resume: string;
+      user_story: string;
+      glossary: string;
+      last_edited: string;
+    }> => ipcRenderer.invoke("db:getLastInsertedProfile"),
   },
 });

@@ -15,11 +15,18 @@ declare global {
           resume: string;
           user_story: string;
           glossary: string;
-        }) => Promise<void>;
+        }) => Promise<number>;
         fetchProfile: (id: number) => Promise<{
           resume: string;
           user_story: string;
           glossary: string;
+          last_edited: string;
+        }>;
+        getLastInsertedProfile: () => Promise<{
+          resume: string;
+          user_story: string;
+          glossary: string;
+          last_edited: string;
         }>;
       };
     };
