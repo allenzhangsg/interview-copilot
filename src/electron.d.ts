@@ -28,6 +28,7 @@ declare global {
           glossary: string;
           last_edited: string;
         }>;
+        removeAllProfiles: () => Promise<void>;
       };
     };
   }

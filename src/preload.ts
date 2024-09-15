@@ -32,5 +32,6 @@ contextBridge.exposeInMainWorld("electron", {
       glossary: string;
       last_edited: string;
     }> => ipcRenderer.invoke("db:getLastInsertedProfile"),
+    removeAllProfiles: () => ipcRenderer.invoke("db:removeAllProfiles"),
   },
 });

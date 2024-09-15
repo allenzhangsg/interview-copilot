@@ -61,3 +61,8 @@ export const getLastInsertedProfile = async () => {
   );
   return result;
 };
+
+export const removeAllProfiles = async () => {
+  const db = getDb();
+  await db.exec("DELETE FROM profiles");
+};
