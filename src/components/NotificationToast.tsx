@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import * as Toast from "@radix-ui/react-toast";
+import "../toast.css";
 
 interface NotificationToastProps {
   notification: string | null;
@@ -13,6 +14,7 @@ const NotificationToast: React.FC<NotificationToastProps> = ({
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
+    console.log("NotificationToast: notification", notification);
     if (notification) {
       setOpen(true);
       const timer = setTimeout(() => {

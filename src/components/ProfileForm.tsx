@@ -106,7 +106,6 @@ const ProfileForm = () => {
                 size="2"
                 variant="outline"
                 color="red"
-                onClick={handleRemoveAllProfiles}
               >
                 Remove All Profiles
               </Button>

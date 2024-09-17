@@ -1,25 +1,16 @@
 import { Flex, Button, Box } from "@radix-ui/themes";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import CareerForm from "../components/CareerForm";
 import ProfileForm from "../components/ProfileForm";
 import SettingsForm from "../components/SettingsForm";
 import StartButton from "../components/StartButton";
 import { NotificationContext } from "../context/NotificationContext";
 import NotificationToast from "../components/NotificationToast";
+import TimeDisplay from "../components/TimeDisplay";
 
 const Home = () => {
   const [selectedTab, setSelectedTab] = useState("Profile");
-  const [currentTime, setCurrentTime] = useState(
-    new Date().toLocaleTimeString()
-  ); // Add state for current time
   const [notification, setNotification] = useState<string | null>(null);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentTime(new Date().toLocaleTimeString()); // Update time every second
-    }, 1000);
-    return () => clearInterval(interval); // Cleanup on unmount
-  }, []);
 
   const interviewButtons = [
     { label: "Profile", height: "50px" },
@@ -76,10 +67,7 @@ const Home = () => {
             style={{ borderTop: "1px solid var(--accent-7)" }}
           >
             {renderButtons(settingsButtons)}
-            <Box style={{ height: "50%" }}>
-              {/* TODO: turn it to a separate compenent. It's causing re-render of the home page */}
-              {currentTime}
-            </Box>
+            <TimeDisplay />
           </Flex>
         </Flex>
         <Flex
