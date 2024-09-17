@@ -4,12 +4,15 @@ import CareerForm from "../components/CareerForm";
 import ProfileForm from "../components/ProfileForm";
 import SettingsForm from "../components/SettingsForm";
 import StartButton from "../components/StartButton";
+import { NotificationContext } from "../context/NotificationContext";
+import NotificationToast from "../components/NotificationToast";
 
 const Home = () => {
   const [selectedTab, setSelectedTab] = useState("Profile");
   const [currentTime, setCurrentTime] = useState(
     new Date().toLocaleTimeString()
   ); // Add state for current time
+  const [notification, setNotification] = useState<string | null>(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -43,57 +46,67 @@ const Home = () => {
     ));
   };
 
+  const handleCloseNotification = () => {
+    setNotification(null);
+  };
+
   return (
-    <Flex direction="row" height="calc(100vh - 30px)">
-      <Flex
-        direction="column"
-        width="150px"
-        ml="-8px"
-        justify="between"
-        align="center"
-        height="100%"
-        style={{ backgroundColor: "var(--accent-4)" }}
-      >
-        {/* Sidebar content goes here */}
-        <Box>
-          <StartButton />
-          {renderButtons(interviewButtons)} {/* Render buttons here */}
-        </Box>
+    <NotificationContext.Provider value={{ setNotification }}>
+      <Flex direction="row" height="calc(100vh - 30px)">
         <Flex
           direction="column"
-          width="100%"
-          height="120px"
+          width="150px"
+          ml="-8px"
           justify="between"
           align="center"
-          style={{ borderTop: "1px solid var(--accent-7)" }}
+          height="100%"
+          style={{ backgroundColor: "var(--accent-4)" }}
         >
-          {renderButtons(settingsButtons)}
-          <Box style={{ height: "50%" }}>
-            {/* TODO: turn it to a separate compenent. It's causing re-render of the home page */}
-            {currentTime}
+          {/* Sidebar content goes here */}
+          <Box>
+            <StartButton />
+            {renderButtons(interviewButtons)} {/* Render buttons here */}
+          </Box>
+          <Flex
+            direction="column"
+            width="100%"
+            height="120px"
+            justify="between"
+            align="center"
+            style={{ borderTop: "1px solid var(--accent-7)" }}
+          >
+            {renderButtons(settingsButtons)}
+            <Box style={{ height: "50%" }}>
+              {/* TODO: turn it to a separate compenent. It's causing re-render of the home page */}
+              {currentTime}
+            </Box>
+          </Flex>
+        </Flex>
+        <Flex
+          direction="row"
+          justify="center"
+          p="20px"
+          mr="-8px"
+          style={{
+            flex: 1,
+            backgroundColor: "var(--accent-2)",
+            overflowY: "auto",
+            overflowX: "hidden",
+          }}
+        >
+          {/* Main content goes here */}
+          <Box>
+            {selectedTab === "Profile" && <ProfileForm />}
+            {selectedTab === "Settings" && <SettingsForm />}
+            {selectedTab === "Careers" && <CareerForm />}
           </Box>
         </Flex>
       </Flex>
-      <Flex
-        direction="row"
-        justify="center"
-        p="20px"
-        mr="-8px"
-        style={{
-          flex: 1,
-          backgroundColor: "var(--accent-2)",
-          overflowY: "auto",
-          overflowX: "hidden",
-        }}
-      >
-        {/* Main content goes here */}
-        <Box>
-          {selectedTab === "Profile" && <ProfileForm />}
-          {selectedTab === "Settings" && <SettingsForm />}
-          {selectedTab === "Careers" && <CareerForm />}
-        </Box>
-      </Flex>
-    </Flex>
+      <NotificationToast
+        notification={notification}
+        onClose={handleCloseNotification}
+      />
+    </NotificationContext.Provider>
   );
 };
 

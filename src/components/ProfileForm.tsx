@@ -1,12 +1,15 @@
 import { Flex, Box, Text, Button, Dialog } from "@radix-ui/themes";
 import EditableTextArea from "./EditableTextArea";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { NotificationContext } from "../context/NotificationContext";
 
 const ProfileForm = () => {
   const [resumeText, setResumeText] = useState<string>("");
   const [userStoryText, setUserStoryText] = useState<string>("");
   const [glossaryText, setGlossaryText] = useState<string>("");
   const [lastEdited, setLastEdited] = useState<string>("");
+
+  const { setNotification } = useContext(NotificationContext);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,6 +43,7 @@ const ProfileForm = () => {
   const handleRemoveAllProfiles = async () => {
     await window.electron.db.removeAllProfiles();
     console.log("All profiles removed");
+    setNotification("All profiles removed");
     handleFetch(); // Fetch the updated profile to get the new last_edited value
   };
 
