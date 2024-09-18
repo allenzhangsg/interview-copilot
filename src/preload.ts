@@ -33,5 +33,9 @@ contextBridge.exposeInMainWorld("electron", {
       last_edited: string;
     }> => ipcRenderer.invoke("db:getLastInsertedProfile"),
     removeAllProfiles: () => ipcRenderer.invoke("db:removeAllProfiles"),
+    insertCareer: (career: { company_name: string; job_description: string }) =>
+      ipcRenderer.invoke("db:insertCareer", career),
+    getLastInsertedCareer: () => ipcRenderer.invoke("db:getLastInsertedCareer"),
+    removeAllCareers: () => ipcRenderer.invoke("db:removeAllCareers"),
   },
 });

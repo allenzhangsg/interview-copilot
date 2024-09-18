@@ -1,16 +1,54 @@
-import { Flex, Box, Text } from "@radix-ui/themes";
+import { Flex, Box, Text, Button } from "@radix-ui/themes";
 import EditableTextArea from "./EditableTextArea";
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
+import { NotificationContext } from "../context/NotificationContext";
 
 const CareerForm = () => {
   const [companyName, setCompanyName] = useState("");
   const [jobDescription, setJobDescription] = useState("");
+  const [lastEdited, setLastEdited] = useState<string>("");
+
+  const { setNotification } = useContext(NotificationContext);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const career = {
+      company_name: companyName,
+      job_description: jobDescription,
+    };
+    const id = await window.electron.db.insertCareer(career);
+    console.log(`Career inserted with ID: ${id}`);
+    setNotification("Career information saved successfully");
+    handleFetch();
+  };
+
+  const handleFetch = async () => {
+    console.log("Fetching last inserted career");
+    const career = await window.electron.db.getLastInsertedCareer();
+    console.log("Career fetched:", career);
+    if (career) {
+      setCompanyName(career.company_name);
+      setJobDescription(career.job_description);
+      setLastEdited(new Date(career.last_edited).toLocaleString());
+    } else {
+      setCompanyName("");
+      setJobDescription("");
+      setLastEdited("");
+    }
+  };
+
+  useEffect(() => {
+    handleFetch();
+  }, []);
 
   return (
     <Box p="4" style={{ width: "600px" }}>
-      <Flex justify="start">
+      <Flex justify="start" direction="row" align="center" gap="4">
         <Text size="5" weight="bold" mb="5">
           Career Information
+        </Text>
+        <Text size="1" color="gray" mb="5">
+          Last edited: {lastEdited}
         </Text>
       </Flex>
       <Flex direction="column" gap="4">
@@ -36,6 +74,11 @@ const CareerForm = () => {
             onChange={setJobDescription}
           />
         </Box>
+        <Flex justify="end" gap="2">
+          <Button size="2" variant="soft" onClick={handleSubmit}>
+            Save Career Info
+          </Button>
+        </Flex>
       </Flex>
     </Box>
   );

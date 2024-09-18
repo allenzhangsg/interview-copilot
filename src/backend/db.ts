@@ -23,7 +23,14 @@ export const initDatabase = async (): Promise<Database> => {
       user_story TEXT,
       glossary TEXT,
       last_edited DATETIME DEFAULT CURRENT_TIMESTAMP
-    )
+    );
+
+    CREATE TABLE IF NOT EXISTS careers (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      company_name TEXT,
+      job_description TEXT,
+      last_edited DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
   `);
 
   return db;
@@ -65,4 +72,30 @@ export const getLastInsertedProfile = async () => {
 export const removeAllProfiles = async () => {
   const db = getDb();
   await db.exec("DELETE FROM profiles");
+};
+
+export const insertCareer = async (career: {
+  company_name: string;
+  job_description: string;
+}) => {
+  const db = getDb();
+  const { company_name, job_description } = career;
+  const result = await db.run(
+    "INSERT INTO careers (company_name, job_description, last_edited) VALUES (?, ?, CURRENT_TIMESTAMP)",
+    [company_name, job_description]
+  );
+  return result.lastID;
+};
+
+export const getLastInsertedCareer = async () => {
+  const db = getDb();
+  const result = await db.get(
+    "SELECT id, company_name, job_description, last_edited FROM careers ORDER BY id DESC LIMIT 1"
+  );
+  return result;
+};
+
+export const removeAllCareers = async () => {
+  const db = getDb();
+  await db.run("DELETE FROM careers");
 };

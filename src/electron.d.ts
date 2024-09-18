@@ -29,6 +29,17 @@ declare global {
           last_edited: string;
         }>;
         removeAllProfiles: () => Promise<void>;
+        insertCareer: (career: {
+          company_name: string;
+          job_description: string;
+        }) => Promise<number>;
+        getLastInsertedCareer: () => Promise<{
+          id: number;
+          company_name: string;
+          job_description: string;
+          last_edited: string;
+        }>;
+        removeAllCareers: () => Promise<void>;
       };
     };
   }
