@@ -1,4 +1,4 @@
-import { Flex, Box, Text, Button } from "@radix-ui/themes";
+import { Flex, Box, Text, Button, Dialog } from "@radix-ui/themes";
 import EditableTextArea from "./EditableTextArea";
 import { useState, useEffect, useContext } from "react";
 import { NotificationContext } from "../context/NotificationContext";
@@ -35,6 +35,12 @@ const CareerForm = () => {
       setJobDescription("");
       setLastEdited("");
     }
+  };
+
+  const handleRemoveAllCareers = async () => {
+    await window.electron.db.removeAllCareers();
+    setNotification("All careers removed successfully");
+    handleFetch();
   };
 
   useEffect(() => {
@@ -78,6 +84,30 @@ const CareerForm = () => {
           <Button size="2" variant="soft" onClick={handleSubmit}>
             Save Career Info
           </Button>
+          <Dialog.Root>
+            <Dialog.Trigger>
+              <Button size="2" variant="outline" color="red">
+                Remove All Careers
+              </Button>
+            </Dialog.Trigger>
+
+            <Dialog.Content maxWidth="450px">
+              <Dialog.Title>Remove all careers</Dialog.Title>
+              <Dialog.Description size="2" mb="4">
+                Are you sure you want to remove all careers?
+              </Dialog.Description>
+              <Flex gap="3" mt="4" justify="end">
+                <Dialog.Close>
+                  <Button variant="soft">Cancel</Button>
+                </Dialog.Close>
+                <Dialog.Close>
+                  <Button color="red" onClick={handleRemoveAllCareers}>
+                    Confirm
+                  </Button>
+                </Dialog.Close>
+              </Flex>
+            </Dialog.Content>
+          </Dialog.Root>
         </Flex>
       </Flex>
     </Box>
