@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Box, Button, Text, Flex } from "@radix-ui/themes";
 
 const AudioCapture: React.FC = () => {
   const [micStream, setMicStream] = useState<MediaStream | null>(null);
   const [desktopStream, setDesktopStream] = useState<MediaStream | null>(null);
+
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const startMicCapture = async () => {
     try {
@@ -16,32 +18,14 @@ const AudioCapture: React.FC = () => {
   };
 
   const startDesktopCapture = async () => {
-    try {
-      // Get available desktop audio sources
-      const sources = await window.electron.audio.getDesktopAudioSources();
-      const source = sources.find((s) => s.name === "Screen 1");
-      console.log(source);
-      if (source) {
-        // Request access to the desktop audio
-        const stream = await navigator.mediaDevices.getUserMedia({
-          audio: {
-            mandatory: {
-              chromeMediaSource: "desktop",
-              chromeMediaSourceId: source.id,
-            },
-          },
-          video: {
-            mandatory: {
-              chromeMediaSource: "desktop",
-              chromeMediaSourceId: source.id,
-            },
-          },
-        } as any);
+    navigator.mediaDevices
+      .getDisplayMedia({ audio: true })
+      .then((stream) => {
         setDesktopStream(stream);
-      }
-    } catch (error) {
-      console.error("Error capturing desktop audio:", error);
-    }
+      })
+      .catch((error) => {
+        console.error("Error accessing desktop:", error);
+      });
   };
 
   const stopCapture = (type: "mic" | "desktop") => {
@@ -61,6 +45,12 @@ const AudioCapture: React.FC = () => {
       if (desktopStream) stopCapture("desktop");
     };
   }, []);
+
+  useEffect(() => {
+    if (videoRef.current && desktopStream) {
+      videoRef.current.srcObject = desktopStream;
+    }
+  }, [desktopStream]);
 
   return (
     <Box p="4">
@@ -91,6 +81,15 @@ const AudioCapture: React.FC = () => {
             {desktopStream ? "Desktop capturing" : "Desktop not capturing"}
           </Text>
         </Flex>
+        {desktopStream && (
+          <video
+            ref={videoRef}
+            autoPlay
+            playsInline
+            muted
+            style={{ maxWidth: "100%", height: "auto" }}
+          />
+        )}
       </Flex>
     </Box>
   );

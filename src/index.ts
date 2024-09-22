@@ -1,4 +1,10 @@
-import { app, BrowserWindow, ipcMain, desktopCapturer } from "electron";
+import {
+  app,
+  BrowserWindow,
+  ipcMain,
+  desktopCapturer,
+  session,
+} from "electron";
 import {
   initDatabase,
   insertProfile,
@@ -39,6 +45,14 @@ const createWindow = async (): Promise<void> => {
     },
   });
 
+  session.defaultSession.setDisplayMediaRequestHandler((request, callback) => {
+    console.log("Display media requested");
+    desktopCapturer.getSources({ types: ["screen"] }).then((sources) => {
+      // Grant access to the first screen found.
+      callback({ video: sources[0], audio: "loopback" });
+    });
+  });
+
   // and load the index.html of the app.
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
@@ -71,14 +85,6 @@ const createWindow = async (): Promise<void> => {
 
   ipcMain.handle("db:removeAllCareers", async () => {
     return await removeAllCareers();
-  });
-
-  // get desktop audio
-  ipcMain.handle("get_desktop_audio_sources", async () => {
-    const sources = await desktopCapturer.getSources({
-      types: ["screen", "window"],
-    });
-    return sources;
   });
 
   ipcMain.on("close-window", () => {

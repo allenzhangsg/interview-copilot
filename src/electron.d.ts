@@ -41,9 +41,6 @@ declare global {
         }>;
         removeAllCareers: () => Promise<void>;
       };
-      audio: {
-        getDesktopAudioSources: () => Promise<any[]>;
-      };
     };
   }
 }
