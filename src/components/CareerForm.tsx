@@ -2,6 +2,7 @@ import { Flex, Box, Text, Button, Dialog } from "@radix-ui/themes";
 import EditableTextArea from "./EditableTextArea";
 import { useState, useEffect, useContext } from "react";
 import { NotificationContext } from "../context/NotificationContext";
+import AudioCapture from "./AudioCapture";
 
 const CareerForm = () => {
   const [companyName, setCompanyName] = useState("");
@@ -80,6 +81,7 @@ const CareerForm = () => {
             onChange={setJobDescription}
           />
         </Box>
+        <AudioCapture />
         <Flex justify="end" gap="2">
           <Button size="2" variant="soft" onClick={handleSubmit}>
             Save Career Info

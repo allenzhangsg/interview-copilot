@@ -38,4 +38,8 @@ contextBridge.exposeInMainWorld("electron", {
     getLastInsertedCareer: () => ipcRenderer.invoke("db:getLastInsertedCareer"),
     removeAllCareers: () => ipcRenderer.invoke("db:removeAllCareers"),
   },
+  audio: {
+    getDesktopAudioSources: () =>
+      ipcRenderer.invoke("get_desktop_audio_sources"),
+  },
 });

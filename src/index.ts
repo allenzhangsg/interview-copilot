@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain } from "electron";
+import { app, BrowserWindow, ipcMain, desktopCapturer } from "electron";
 import {
   initDatabase,
   insertProfile,
@@ -34,6 +34,8 @@ const createWindow = async (): Promise<void> => {
     resizable: false,
     webPreferences: {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
+      nodeIntegration: false,
+      contextIsolation: true,
     },
   });
 
@@ -69,6 +71,14 @@ const createWindow = async (): Promise<void> => {
 
   ipcMain.handle("db:removeAllCareers", async () => {
     return await removeAllCareers();
+  });
+
+  // get desktop audio
+  ipcMain.handle("get_desktop_audio_sources", async () => {
+    const sources = await desktopCapturer.getSources({
+      types: ["screen", "window"],
+    });
+    return sources;
   });
 
   ipcMain.on("close-window", () => {
