@@ -11,7 +11,7 @@ const container = document.getElementById("root");
 
 const root = createRoot(container);
 root.render(
-  <Theme accentColor="bronze" grayColor="sand" radius="large" scaling="100%">
+  <Theme accentColor="gold" grayColor="sand" radius="medium" scaling="100%">
     <HashRouter>
       <TitleBar />
       <Routes>
