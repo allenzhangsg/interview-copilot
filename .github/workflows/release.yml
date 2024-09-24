@@ -1,0 +1,91 @@
+name: Build, Package, and Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build and package
+        run: npm run make
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.os }}-build
+          path: out/make/**/*
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v3
+        with:
+          path: artifacts
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Assets
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs').promises;
+            const path = require('path');
+
+            async function uploadAsset(releaseId, file) {
+              console.log(`Uploading ${file}...`);
+              await github.rest.repos.uploadReleaseAsset({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                release_id: releaseId,
+                name: path.basename(file),
+                data: await fs.readFile(file)
+              });
+            }
+
+            async function* walkDir(dir) {
+              for await (const d of await fs.opendir(dir)) {
+                const entry = path.join(dir, d.name);
+                if (d.isDirectory()) yield* walkDir(entry);
+                else if (d.isFile()) yield entry;
+              }
+            }
+
+            const releaseId = '${{ steps.create_release.outputs.id }}';
+            for await (const file of walkDir('./artifacts')) {
+              if (file.endsWith('.exe') || file.endsWith('.dmg') || file.endsWith('.deb') || file.endsWith('.rpm')) {
+                await uploadAsset(releaseId, file);
+              }
+            }
