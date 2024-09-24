@@ -47,45 +47,18 @@ jobs:
 
       - name: Create Release
         id: create_release
-        uses: actions/create-release@v1
+        uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          tag_name: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
           draft: false
           prerelease: false
+          files: |
+            ./artifacts/**/*.exe
+            ./artifacts/**/*.dmg
+            ./artifacts/**/*.deb
+            ./artifacts/**/*.rpm
 
-      - name: Upload Release Assets
-        uses: actions/github-script@v6
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const fs = require('fs').promises;
-            const path = require('path');
-
-            async function uploadAsset(releaseId, file) {
-              console.log(`Uploading ${file}...`);
-              await github.rest.repos.uploadReleaseAsset({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                release_id: releaseId,
-                name: path.basename(file),
-                data: await fs.readFile(file)
-              });
-            }
-
-            async function* walkDir(dir) {
-              for await (const d of await fs.opendir(dir)) {
-                const entry = path.join(dir, d.name);
-                if (d.isDirectory()) yield* walkDir(entry);
-                else if (d.isFile()) yield entry;
-              }
-            }
-
-            const releaseId = '${{ steps.create_release.outputs.id }}';
-            for await (const file of walkDir('./artifacts')) {
-              if (file.endsWith('.exe') || file.endsWith('.dmg') || file.endsWith('.deb') || file.endsWith('.rpm')) {
-                await uploadAsset(releaseId, file);
-              }
-            }
+      # Remove the "Upload Release Assets" step
