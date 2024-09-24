@@ -1,7 +1,7 @@
 {
   "name": "meeting-copilot",
   "productName": "meeting-copilot",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Meeting Copilot - your AI assistant for meetings",
   "main": ".webpack/main",
   "scripts": {
