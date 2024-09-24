@@ -8,7 +8,7 @@ declare global {
       maximizeWindow: () => void;
       restoreWindow: () => void;
       on: (channel: string, data: () => void) => void;
-      send: (channel: string, data: () => void) => void;
+      send: (channel: string, data: (() => void) | object) => void;
       removeListener: (channel: string, data: () => void) => void;
       db: {
         insertProfile: (profile: {

@@ -4,42 +4,75 @@ import { Box, Button, Text, Flex } from "@radix-ui/themes";
 const AudioCapture: React.FC = () => {
   const [micStream, setMicStream] = useState<MediaStream | null>(null);
   const [desktopStream, setDesktopStream] = useState<MediaStream | null>(null);
+  const [micRecorder, setMicRecorder] = useState<MediaRecorder | null>(null);
+  const [desktopRecorder, setDesktopRecorder] = useState<MediaRecorder | null>(
+    null
+  );
 
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const startMicCapture = async () => {
     try {
-      // Request access to the microphone
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       setMicStream(stream);
+      const recorder = new MediaRecorder(stream);
+      setMicRecorder(recorder);
+
+      const chunks: BlobPart[] = [];
+      recorder.ondataavailable = (e) => chunks.push(e.data);
+      recorder.onstop = () => saveAudioFile(chunks, "mic");
+
+      recorder.start();
     } catch (error) {
       console.error("Error accessing microphone:", error);
     }
   };
 
   const startDesktopCapture = async () => {
-    navigator.mediaDevices
-      .getDisplayMedia({ audio: true })
-      .then((stream) => {
-        setDesktopStream(stream);
-      })
-      .catch((error) => {
-        console.error("Error accessing desktop:", error);
+    try {
+      const stream = await navigator.mediaDevices.getDisplayMedia({
+        audio: true,
       });
+      setDesktopStream(stream);
+      const recorder = new MediaRecorder(stream);
+      setDesktopRecorder(recorder);
+
+      const chunks: BlobPart[] = [];
+      recorder.ondataavailable = (e) => chunks.push(e.data);
+      recorder.onstop = () => saveAudioFile(chunks, "desktop");
+
+      recorder.start();
+    } catch (error) {
+      console.error("Error accessing desktop:", error);
+    }
   };
 
   const stopCapture = (type: "mic" | "desktop") => {
     if (type === "mic" && micStream) {
       micStream.getTracks().forEach((track) => track.stop());
+      if (micRecorder) micRecorder.stop();
       setMicStream(null);
+      setMicRecorder(null);
     } else if (type === "desktop" && desktopStream) {
       desktopStream.getTracks().forEach((track) => track.stop());
+      if (desktopRecorder) desktopRecorder.stop();
       setDesktopStream(null);
+      setDesktopRecorder(null);
     }
   };
 
+  const saveAudioFile = async (chunks: BlobPart[], type: "mic" | "desktop") => {
+    const blob = new Blob(chunks, { type: "audio/webm" });
+    const arrayBuffer = await blob.arrayBuffer();
+    const uint8Array = new Uint8Array(arrayBuffer);
+
+    window.electron.send("save-audio", {
+      buffer: Array.from(uint8Array),
+      type,
+    });
+  };
+
   useEffect(() => {
-    // Clean up streams when component unmounts
     return () => {
       if (micStream) stopCapture("mic");
       if (desktopStream) stopCapture("desktop");

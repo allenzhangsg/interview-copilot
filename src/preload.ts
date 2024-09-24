@@ -8,7 +8,8 @@ contextBridge.exposeInMainWorld("electron", {
   minimizeWindow: () => ipcRenderer.send("minimize-window"),
   maximizeWindow: () => ipcRenderer.send("maximize-window"),
   restoreWindow: () => ipcRenderer.send("restore-window"),
-  send: (channel: string, data: () => void) => ipcRenderer.send(channel, data),
+  send: (channel: string, data: () => (() => void) | object) =>
+    ipcRenderer.send(channel, data),
   on: (channel: string, data: () => void) => ipcRenderer.on(channel, data),
   removeListener: (channel: string, data: () => void) =>
     ipcRenderer.removeListener(channel, data),
