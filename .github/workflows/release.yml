@@ -57,7 +57,7 @@ jobs:
           prerelease: false
           files: |
             ./artifacts/**/*.exe
-            ./artifacts/**/*.dmg
+            # ./artifacts/**/*.dmg
             ./artifacts/**/*.deb
             ./artifacts/**/*.rpm
 
