@@ -59,10 +59,7 @@ jobs:
           draft: false
           prerelease: false
           files: |
-            artifacts/**/*.exe
-            artifacts/**/*.deb
-            artifacts/**/*.rpm
-            artifacts/**/*.dmg
-            artifacts/**/*.zip
-
-      # Remove the "Upload Release Assets" step
+            artifacts/windows-latest-build/squirrel.windows/x64/*.exe
+            artifacts/ubuntu-latest-build/deb/x64/*.deb
+            artifacts/ubuntu-latest-build/rpm/x64/*.rpm
+            artifacts/macos-latest-build/zip/darwin/arm64/*.zip
