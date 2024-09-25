@@ -9,9 +9,7 @@
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "lint": "eslint --ext .ts,.tsx .",
-    "install-dmg-deps": "node -e \"if (process.platform === 'darwin') { require('child_process').execSync('npm install --save-dev @electron-forge/maker-dmg electron-installer-dmg appdmg', {stdio: 'inherit'}) }\"",
-    "postinstall": "npm run install-dmg-deps"
+    "lint": "eslint --ext .ts,.tsx ."
   },
   "devDependencies": {
     "@electron-forge/cli": "^7.4.0",
