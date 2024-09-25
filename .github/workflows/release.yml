@@ -45,6 +45,9 @@ jobs:
         with:
           path: artifacts
 
+      - name: Display structure of downloaded files
+        run: ls -R artifacts
+
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v1
@@ -56,8 +59,10 @@ jobs:
           draft: false
           prerelease: false
           files: |
-            ./artifacts/**/*.exe
-            ./artifacts/**/*.deb
-            ./artifacts/**/*.rpm
+            artifacts/**/*.exe
+            artifacts/**/*.deb
+            artifacts/**/*.rpm
+            artifacts/**/*.dmg
+            artifacts/**/*.zip
 
       # Remove the "Upload Release Assets" step
