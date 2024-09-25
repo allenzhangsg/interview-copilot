@@ -70,3 +70,4 @@ jobs:
             artifacts/ubuntu-latest-build/deb/x64/*.deb
             artifacts/ubuntu-latest-build/rpm/x64/*.rpm
             artifacts/macos-latest-build/zip/darwin/arm64/*.zip
+            artifacts/macos-latest-build/*.dmg
