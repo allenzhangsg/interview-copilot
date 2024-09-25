@@ -40,12 +40,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      # Set up Python for appdmg to be installed
-      - name: Install Python 3.11.4
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.11.4"
-
       - name: Download all artifacts
         uses: actions/download-artifact@v3
         with:
