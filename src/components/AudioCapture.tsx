@@ -8,10 +8,12 @@ const AudioCapture: React.FC = () => {
   const [desktopRecorder, setDesktopRecorder] = useState<MediaRecorder | null>(
     null
   );
-
+  const [micButtonLoading, setMicButtonLoading] = useState(false);
+  const [desktopButtonLoading, setDesktopButtonLoading] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const startMicCapture = async () => {
+    setMicButtonLoading(true);
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       setMicStream(stream);
@@ -25,10 +27,13 @@ const AudioCapture: React.FC = () => {
       recorder.start();
     } catch (error) {
       console.error("Error accessing microphone:", error);
+    } finally {
+      setMicButtonLoading(false);
     }
   };
 
   const startDesktopCapture = async () => {
+    setDesktopButtonLoading(true);
     try {
       const stream = await navigator.mediaDevices.getDisplayMedia({
         audio: true,
@@ -44,6 +49,8 @@ const AudioCapture: React.FC = () => {
       recorder.start();
     } catch (error) {
       console.error("Error accessing desktop:", error);
+    } finally {
+      setDesktopButtonLoading(false);
     }
   };
 
@@ -92,7 +99,11 @@ const AudioCapture: React.FC = () => {
       </Text>
       <Flex direction="column" gap="3">
         <Flex align="center" gap="2">
-          <Button onClick={startMicCapture} disabled={!!micStream}>
+          <Button
+            onClick={startMicCapture}
+            disabled={!!micStream || micButtonLoading}
+            loading={micButtonLoading}
+          >
             Start Mic Capture
           </Button>
           <Button onClick={() => stopCapture("mic")} disabled={!micStream}>
@@ -101,7 +112,11 @@ const AudioCapture: React.FC = () => {
           <Text>{micStream ? "Mic capturing" : "Mic not capturing"}</Text>
         </Flex>
         <Flex align="center" gap="2">
-          <Button onClick={startDesktopCapture} disabled={!!desktopStream}>
+          <Button
+            onClick={startDesktopCapture}
+            disabled={!!desktopStream || desktopButtonLoading}
+            loading={desktopButtonLoading}
+          >
             Start Desktop Capture
           </Button>
           <Button
